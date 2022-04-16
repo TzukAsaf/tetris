@@ -4,11 +4,37 @@ function getBaseShape()
 }
 
 
+
+
 function getShape(rowAdder, colAdder)
 {
     baseShape = getBaseShape()
     return baseShape.map(square => {
         return {row: square.row + rowAdder, col: square.col + colAdder}
     })
+
+}
+
+function addOffsetToShape(shapeArr, rowAdder, colAdder)
+{
+    return shapeArr.map(square => {
+        return {row: square.row + rowAdder, col: square.col + colAdder}
+    })
+
+}
+
+function isShapeInBounds(squareArray)
+{
+    for(let square of squareArray)
+    {
+        if(square.col < 0 || square.col >= BoardSize.cols || square.row >= BoardSize.rows)
+        {
+            return false
+        }
+    }
+
+
+    return true        
+
 
 }

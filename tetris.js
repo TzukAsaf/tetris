@@ -6,7 +6,7 @@ function generateNewShape()
         row: 0,
         col: BoardSize.cols / squareSize ^ 1 - 1
     }
-    newShape.squareArr = getShape(newShape.row, newShape.col)
+    newShape.squareArr = getBaseShape()
     return newShape
 }
 function drawShape()
@@ -28,7 +28,7 @@ function mainLoop()
 }
 function dropShape()
 {
-    if(curShape.row != BoardSize.rows - 3)
+    if(isShapeInBounds(getShape(curShape.row + 1, curShape.col)))
     {
         curShape.squareArr = getShape(curShape.row + 1, curShape.col)
         curShape.row++
@@ -46,19 +46,19 @@ let direction
 
 function HandleKeyPress(key)
 {
-    if(key.keyCode === 65)
+    if(key.keyCode === 65 && isShapeInBounds(getShape(curShape.row, curShape.col - 1)))
     {
         direction = DIRECTION.LEFT
         curShape.squareArr = getShape(curShape.row, curShape.col - 1)
         curShape.col--
     }
-    else if(key.keyCode === 68)
+    else if(key.keyCode === 68 && isShapeInBounds(getShape(curShape.row, curShape.col + 1)))
     {
         direction = DIRECTION.RIGHT
         curShape.squareArr = getShape(curShape.row, curShape.col + 1)
-        curShape.col++ 
+        curShape.col++
     }
-    else if(key.keyCode === 83)
+    else if(key.keyCode === 83 && isShapeInBounds(getShape(curShape.row, curShape.col + 1)))
     {
         direction = DIRECTION.DOWN
         curShape.squareArr = getShape(curShape.row + 1, curShape.col)
@@ -70,4 +70,4 @@ function HandleKeyPress(key)
 const BoardSize = {rows: 30, cols: 20}
 curShape = generateNewShape()
 setInterval(mainLoop, 1)
-setInterval(dropShape, 300)
+setInterval(dropShape, 100)
